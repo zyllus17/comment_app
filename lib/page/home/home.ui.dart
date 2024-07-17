@@ -1,4 +1,5 @@
 import 'package:comment_app/models/comment.model.dart';
+import 'package:comment_app/services/auth.service.dart';
 import 'package:comment_app/services/comment.service.dart';
 import 'package:comment_app/widgets/comment_box.widget.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,17 @@ class _HomeScreenState extends State<HomeScreen> {
             fontSize: 20,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await AuthService().signOut();
+              Navigator.pushReplacementNamed(context, '/login');
+              debugPrint('Logged out');
+            },
+            icon: const Icon(Icons.logout),
+            color: AppColors.white,
+          ),
+        ],
       ),
       body: FutureBuilder<List<Comment>>(
         future: futureComments,
