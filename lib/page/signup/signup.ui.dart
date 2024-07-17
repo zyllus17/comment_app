@@ -139,21 +139,23 @@ class _SignupScreenState extends State<SignupScreen> {
                       final String name = _nameController.text.trim();
                       final String email = _emailController.text.trim();
                       final String password = _passwordController.text.trim();
-
-                      try {
-                        await Provider.of<AuthService>(context, listen: false)
-                            .signUp(email, password);
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomeScreen()),
-                        );
-                      } catch (e) {
-                        // Print error to debug console
-                        debugPrint('Signup error: $e');
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Failed to sign up')),
-                        );
+                      if (email.isNotEmpty && password.isNotEmpty) {
+                        try {
+                          await Provider.of<AuthService>(context, listen: false)
+                              .signUp(email, password);
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomeScreen()),
+                          );
+                          debugPrint('Logged in');
+                        } catch (e) {
+                          // Print error to debug console
+                          debugPrint('Signup error: $e');
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Failed to sign up')),
+                          );
+                        }
                       }
                     }
                   },
