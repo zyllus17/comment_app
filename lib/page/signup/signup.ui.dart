@@ -5,11 +5,18 @@ import 'package:comment_app/services/auth.service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
+
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  SignupScreen({super.key});
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +37,7 @@ class SignupScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
+          key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -46,6 +54,12 @@ class SignupScreen extends StatelessWidget {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                     borderSide: BorderSide.none,
+                  ),
+                  errorBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red, width: 2.0),
+                  ),
+                  focusedErrorBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red, width: 2.0),
                   ),
                 ),
                 validator: (value) {
@@ -67,6 +81,12 @@ class SignupScreen extends StatelessWidget {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                     borderSide: BorderSide.none,
+                  ),
+                  errorBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red, width: 2.0),
+                  ),
+                  focusedErrorBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red, width: 2.0),
                   ),
                 ),
                 validator: (value) {
@@ -93,13 +113,19 @@ class SignupScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.0),
                     borderSide: BorderSide.none,
                   ),
+                  errorBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red, width: 2.0),
+                  ),
+                  focusedErrorBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red, width: 2.0),
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your password';
                   }
-                  if (value.length < 6) {
-                    return 'Password should be at least 6 characters';
+                  if (value.length < 8) {
+                    return 'Password should be at least 8 characters';
                   }
                   return null;
                 },
@@ -109,7 +135,7 @@ class SignupScreen extends StatelessWidget {
                 width: 250,
                 child: ElevatedButton(
                   onPressed: () async {
-                    if (Form.of(context)!.validate()) {
+                    if (_formKey.currentState!.validate()) {
                       final String name = _nameController.text.trim();
                       final String email = _emailController.text.trim();
                       final String password = _passwordController.text.trim();
@@ -119,13 +145,14 @@ class SignupScreen extends StatelessWidget {
                             .signUp(email, password);
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => HomeScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => const HomeScreen()),
                         );
                       } catch (e) {
                         // Print error to debug console
-                        print('Signup error: $e');
+                        debugPrint('Signup error: $e');
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Failed to sign up')),
+                          const SnackBar(content: Text('Failed to sign up')),
                         );
                       }
                     }
@@ -182,6 +209,7 @@ class SignupScreen extends StatelessWidget {
   }
 
   bool _isValidEmail(String email) {
+    // Regular expression for a basic email validation
     final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     return emailRegex.hasMatch(email);
   }
