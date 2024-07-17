@@ -1,5 +1,7 @@
-import 'package:comment_app/constants/colors.const.dart';
+import 'package:comment_app/widgets/comment_box.widget.dart';
 import 'package:flutter/material.dart';
+
+import 'package:comment_app/constants/colors.const.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -27,95 +29,12 @@ class HomeScreen extends StatelessWidget {
               delegate: SliverChildBuilderDelegate(
                 childCount: 10,
                 (context, index) {
-                  return Container(
-                    margin: const EdgeInsets.all(20),
-                    padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CircleAvatar(
-                          radius: 25,
-                          backgroundColor: AppColors.primaryBlue,
-                          child: Text(
-                            'A',
-                            style: theme.textTheme.headlineSmall?.copyWith(
-                              color: AppColors.white,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                RichText(
-                                  text: TextSpan(
-                                    text: 'Name: ',
-                                    style:
-                                        theme.textTheme.headlineSmall?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      fontStyle: FontStyle.italic,
-                                      fontSize: 16,
-                                      color: AppColors.darkGrey,
-                                    ),
-                                    children: [
-                                      TextSpan(
-                                        text: 'User $index',
-                                        style: theme.textTheme.headlineSmall
-                                            ?.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          fontStyle: FontStyle.normal,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                RichText(
-                                  text: TextSpan(
-                                    text: 'Email: ',
-                                    style:
-                                        theme.textTheme.headlineSmall?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      fontStyle: FontStyle.italic,
-                                      fontSize: 16,
-                                      color: AppColors.darkGrey,
-                                    ),
-                                    children: [
-                                      TextSpan(
-                                        text: 'User $index',
-                                        style: theme.textTheme.headlineSmall
-                                            ?.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          fontStyle: FontStyle.normal,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Text(
-                                  'lorem ipsum dolor sit amet consectetur adipiscing elit. Lorem ipsum dolor sit amet consectetur adipiscing elitdsadasdsadsadasadasdasdsadasdsadsadsa.',
-                                  style:
-                                      theme.textTheme.headlineSmall?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                  maxLines: 4,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                  return const CommentBox(
+                    initial: 'A',
+                    name: 'Maruf',
+                    email: 'maruf@pingolearn.com',
+                    comment:
+                        'Hello there what a wonderful day. Lorum impusdaskj',
                   );
                 },
               ),
