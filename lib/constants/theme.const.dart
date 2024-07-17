@@ -3,27 +3,28 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static final ThemeData appTheme = ThemeData(
-    scaffoldBackgroundColor: AppColors.white,
+    scaffoldBackgroundColor: AppColors.darkGrey,
     primaryColor: AppColors.primaryBlue,
     textTheme: textTheme,
   );
 
   static const TextTheme textTheme = TextTheme(
-    displayLarge: _headline1, //24px
-    displayMedium: _headline2, //18px
-    displaySmall: _headline3, //14px
-    headlineMedium: _headline4, //16px
-    headlineSmall: _headline5, //14px
+      displayLarge: _headline1, //24px
+      displayMedium: _headline2, //18px
+      displaySmall: _headline3, //14px
+      headlineMedium: _headline4, //16px
+      headlineSmall: _headline5, //14px
+      labelLarge: _headline5
 
-    // headline6: _headline6, //20px
-    // subtitle1: _subtitle1, //16px
-    // subtitle2: _subtitle2, //13px
-    // bodyText1: _bodyText1, //14px
-    // bodyText2: _bodyText2, //14px //normal
-    // button: _button, //14px
-    // caption: _caption, //12px
-    // overline: _overline, //10px
-  );
+      // headline6: _headline6, //20px
+      // subtitle1: _subtitle1, //16px
+      // subtitle2: _subtitle2, //13px
+      // bodyText1: _bodyText1, //14px
+      // bodyText2: _bodyText2, //14px //normal
+      // button: _button, //14px
+      // caption: _caption, //12px
+      // overline: _overline, //10px
+      );
 
   static const TextStyle _headline1 = TextStyle(
     fontFamily: "Poppins",
