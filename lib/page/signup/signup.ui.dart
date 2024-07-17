@@ -1,6 +1,9 @@
 import 'package:comment_app/constants/colors.const.dart';
+import 'package:comment_app/page/home/home.ui.dart';
 import 'package:comment_app/page/login/login.ui.dart';
+import 'package:comment_app/services/auth.service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignupScreen extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
@@ -63,6 +66,7 @@ class SignupScreen extends StatelessWidget {
             const SizedBox(height: 20),
             TextFormField(
               controller: _passwordController,
+              obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Password',
                 fillColor: AppColors.white,
@@ -79,11 +83,36 @@ class SignupScreen extends StatelessWidget {
             SizedBox(
               width: 250,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                  );
+                onPressed: () async {
+                  final String email = _emailController.text.trim();
+                  final String password = _passwordController.text.trim();
+
+                  if (email.isNotEmpty && password.isNotEmpty) {
+                    try {
+                      await Provider.of<AuthService>(context, listen: false)
+                          .signUp(email, password);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                      );
+                    } catch (e) {
+                      // Print error to debug console
+                      print('Signup error: $e');
+                      FlutterError.reportError(FlutterErrorDetails(
+                        exception: e,
+                        stack: StackTrace.current,
+                        library: 'signup_screen',
+                        context: ErrorDescription('while signing up'),
+                      ));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(e.toString())),
+                      );
+                    }
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Please enter all fields')),
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryBlue,
@@ -117,12 +146,14 @@ class SignupScreen extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  child: Text('Login',
-                      style: theme.textTheme.headlineSmall?.copyWith(
-                        color: AppColors.primaryBlue,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      )),
+                  child: Text(
+                    'Login',
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      color: AppColors.primaryBlue,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
                 )
               ],
             ),
