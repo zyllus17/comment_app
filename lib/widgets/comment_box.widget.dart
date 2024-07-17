@@ -45,6 +45,7 @@ class CommentBox extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   RichText(
+                    maxLines: 1,
                     text: TextSpan(
                       text: 'Name: ',
                       style: theme.textTheme.headlineSmall?.copyWith(
