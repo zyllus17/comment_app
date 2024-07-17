@@ -1,4 +1,5 @@
 import 'package:comment_app/firebase_options.dart';
+import 'package:comment_app/page/error/error.ui.dart';
 import 'package:comment_app/page/home/home.ui.dart';
 import 'package:comment_app/page/login/login.ui.dart';
 import 'package:comment_app/page/signup/signup.ui.dart';
@@ -39,12 +40,15 @@ class MyApp extends StatelessWidget {
                 builder: (context, authService, _) {
                   return authService.user == null
                       ? LoginScreen()
-                      : HomeScreen();
+                      : const HomeScreen();
                 },
               ),
           '/signup': (context) => SignupScreen(),
           '/login': (context) => LoginScreen(),
-          '/home': (context) => HomeScreen(),
+          '/home': (context) => const HomeScreen(),
+        },
+        onGenerateRoute: (settings) {
+          return MaterialPageRoute(builder: (context) => const ErrorScreen());
         },
       ),
     );
