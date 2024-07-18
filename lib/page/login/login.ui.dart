@@ -33,6 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
           'Comments',
           style: theme.textTheme.displayLarge,
         ),
+        automaticallyImplyLeading: false,
       ),
       body: Stack(
         children: [
