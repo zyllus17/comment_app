@@ -41,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: AppColors.lightGrey,
       appBar: AppBar(
         centerTitle: false,
+        automaticallyImplyLeading: false,
         backgroundColor: AppColors.primaryBlue,
         title: Text(
           'Comments',
