@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LoadingState()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Comments App',
         theme: AppTheme.appTheme,
         initialRoute: '/',
