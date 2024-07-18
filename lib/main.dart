@@ -4,6 +4,7 @@ import 'package:comment_app/page/home/home.ui.dart';
 import 'package:comment_app/page/login/login.ui.dart';
 import 'package:comment_app/page/signup/signup.ui.dart';
 import 'package:comment_app/services/auth.service.dart';
+import 'package:comment_app/services/loading.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AuthService()),
+        ChangeNotifierProvider(create: (_) => AuthService(LoadingState())),
+        ChangeNotifierProvider(create: (_) => LoadingState()),
       ],
       child: MaterialApp(
         title: 'Comments App',
