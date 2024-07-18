@@ -1,8 +1,12 @@
 import 'package:comment_app/constants/colors.const.dart';
+import 'package:comment_app/helpers/email_regex.helper.dart';
 import 'package:comment_app/page/home/home.ui.dart';
 import 'package:comment_app/page/login/login.ui.dart';
 import 'package:comment_app/services/auth.service.dart';
 import 'package:comment_app/services/loading.dart';
+import 'package:comment_app/widgets/custom_textformfield.widget.dart';
+import 'package:comment_app/widgets/loading.widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,14 +32,11 @@ class _SignupScreenState extends State<SignupScreen> {
       backgroundColor: AppColors.lightGrey,
       appBar: AppBar(
         centerTitle: false,
-        backgroundColor: AppColors.lightGrey,
         title: Text(
           'Comments',
-          style: theme.textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: AppColors.primaryBlue,
-          ),
+          style: theme.textTheme.displayLarge,
         ),
+        automaticallyImplyLeading: false,
       ),
       body: Stack(
         children: [
@@ -48,25 +49,9 @@ class _SignupScreenState extends State<SignupScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Spacer(),
-                  TextFormField(
+                  CustomTextFormField(
+                    label: 'Name',
                     controller: _nameController,
-                    decoration: InputDecoration(
-                      labelText: 'Name',
-                      fillColor: AppColors.white,
-                      filled: true,
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 16),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      errorBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red, width: 2.0),
-                      ),
-                      focusedErrorBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red, width: 2.0),
-                      ),
-                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your name';
@@ -75,56 +60,24 @@ class _SignupScreenState extends State<SignupScreen> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  TextFormField(
+                  CustomTextFormField(
+                    label: 'Email',
                     controller: _emailController,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      fillColor: AppColors.white,
-                      filled: true,
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 16),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      errorBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red, width: 2.0),
-                      ),
-                      focusedErrorBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red, width: 2.0),
-                      ),
-                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your email';
                       }
-                      if (!_isValidEmail(value)) {
+                      if (!isValidEmail(value)) {
                         return 'Please enter a valid email address';
                       }
                       return null;
                     },
                   ),
                   const SizedBox(height: 20),
-                  TextFormField(
-                    controller: _passwordController,
+                  CustomTextFormField(
+                    label: 'Password',
                     obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      fillColor: AppColors.white,
-                      filled: true,
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 16),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      errorBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red, width: 2.0),
-                      ),
-                      focusedErrorBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red, width: 2.0),
-                      ),
-                    ),
+                    controller: _passwordController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your password';
@@ -156,8 +109,13 @@ class _SignupScreenState extends State<SignupScreen> {
                                     builder: (context) => const HomeScreen()),
                               );
                               debugPrint('Signed up');
+                            } on FirebaseAuthException catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text(
+                                        "${e.toString()} Something went wrong while creating account")),
+                              );
                             } catch (e) {
-                              // Print error to debug console
                               debugPrint('Signup error: $e');
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text(e.toString())),
@@ -166,20 +124,9 @@ class _SignupScreenState extends State<SignupScreen> {
                           }
                         }
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryBlue,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
                       child: Text(
                         'Signup',
-                        style: theme.textTheme.headlineSmall?.copyWith(
-                          color: AppColors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: theme.textTheme.labelMedium,
                       ),
                     ),
                   ),
@@ -192,21 +139,9 @@ class _SignupScreenState extends State<SignupScreen> {
                         onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => LoginScreen()),
+                              builder: (context) => const LoginScreen()),
                         ),
-                        style: TextButton.styleFrom(
-                          minimumSize: Size.zero,
-                          padding: EdgeInsets.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        child: Text(
-                          'Login',
-                          style: theme.textTheme.headlineSmall?.copyWith(
-                            color: AppColors.primaryBlue,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                        ),
+                        child: Text('Login', style: theme.textTheme.labelSmall),
                       )
                     ],
                   ),
@@ -215,20 +150,9 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
           ),
-          if (isLoading)
-            Container(
-              color: Colors.black.withOpacity(0.5),
-              child: const Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
+          if (isLoading) const LoadingWidget(),
         ],
       ),
     );
-  }
-
-  bool _isValidEmail(String email) {
-    final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-    return emailRegex.hasMatch(email);
   }
 }
