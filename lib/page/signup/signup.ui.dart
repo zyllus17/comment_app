@@ -29,7 +29,6 @@ class _SignupScreenState extends State<SignupScreen> {
     final isLoading = Provider.of<LoadingState>(context).isLoading;
 
     return Scaffold(
-      backgroundColor: AppColors.lightGrey,
       appBar: AppBar(
         centerTitle: false,
         title: Text(

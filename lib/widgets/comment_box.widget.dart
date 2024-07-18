@@ -29,13 +29,8 @@ class CommentBox extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 25,
-            backgroundColor: AppColors.primaryBlue,
-            child: Text(
-              initial,
-              style: theme.textTheme.headlineSmall?.copyWith(
-                color: AppColors.white,
-              ),
-            ),
+            backgroundColor: AppColors.darkGrey,
+            child: Text(initial, style: theme.textTheme.displayMedium),
           ),
           const SizedBox(width: 10),
           Expanded(
@@ -48,20 +43,11 @@ class CommentBox extends StatelessWidget {
                     maxLines: 1,
                     text: TextSpan(
                       text: 'Name: ',
-                      style: theme.textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
-                        fontSize: 16,
-                        color: AppColors.darkGrey,
-                      ),
+                      style: theme.textTheme.bodyMedium,
                       children: [
                         TextSpan(
                           text: name,
-                          style: theme.textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 16,
-                          ),
+                          style: theme.textTheme.bodyLarge,
                         ),
                       ],
                     ),
@@ -69,30 +55,19 @@ class CommentBox extends StatelessWidget {
                   RichText(
                     text: TextSpan(
                       text: 'Email: ',
-                      style: theme.textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
-                        fontSize: 16,
-                        color: AppColors.darkGrey,
-                      ),
+                      style: theme.textTheme.bodyMedium,
                       children: [
                         TextSpan(
                           text: email,
-                          style: theme.textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 16,
-                          ),
+                          style: theme.textTheme.bodyLarge,
                         ),
                       ],
                     ),
                   ),
+                  const SizedBox(height: 4),
                   Text(
                     comment,
-                    style: theme.textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
+                    style: theme.textTheme.bodySmall,
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
                   ),
