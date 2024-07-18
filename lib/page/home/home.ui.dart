@@ -1,6 +1,7 @@
 import 'package:comment_app/models/comment.model.dart';
 import 'package:comment_app/services/auth.service.dart';
 import 'package:comment_app/services/comment.service.dart';
+import 'package:comment_app/services/loading.dart';
 import 'package:comment_app/widgets/comment_box.widget.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () async {
-              await AuthService().signOut();
+              await AuthService(LoadingState()).signOut();
               Navigator.pushReplacementNamed(context, '/login');
               debugPrint('Logged out');
             },
