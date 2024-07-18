@@ -1,10 +1,12 @@
-import 'package:comment_app/constants/colors.const.dart';
+import 'package:comment_app/helpers/email_regex.helper.dart';
+import 'package:comment_app/widgets/custom_textformfield.widget.dart';
+import 'package:comment_app/widgets/loading.widget.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:comment_app/page/home/home.ui.dart';
 import 'package:comment_app/page/signup/signup.ui.dart';
 import 'package:comment_app/services/auth.service.dart';
 import 'package:comment_app/services/loading.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -24,16 +26,11 @@ class _LoginScreenState extends State<LoginScreen> {
     final isLoading = Provider.of<LoadingState>(context).isLoading;
 
     return Scaffold(
-      backgroundColor: AppColors.lightGrey,
       appBar: AppBar(
         centerTitle: false,
-        backgroundColor: AppColors.lightGrey,
         title: Text(
           'Comments',
-          style: theme.textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: AppColors.primaryBlue,
-          ),
+          style: theme.textTheme.displayLarge,
         ),
       ),
       body: Stack(
@@ -47,56 +44,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Spacer(),
-                  TextFormField(
+                  CustomTextFormField(
+                    label: 'Email',
                     controller: _emailController,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      fillColor: AppColors.white,
-                      filled: true,
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 16),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      errorBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red, width: 2.0),
-                      ),
-                      focusedErrorBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red, width: 2.0),
-                      ),
-                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your email';
                       }
-                      if (!_isValidEmail(value)) {
+                      if (!isValidEmail(value)) {
                         return 'Please enter a valid email address';
                       }
                       return null;
                     },
                   ),
                   const SizedBox(height: 20),
-                  TextFormField(
-                    controller: _passwordController,
+                  CustomTextFormField(
+                    label: 'Password',
                     obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      fillColor: AppColors.white,
-                      filled: true,
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 16),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      errorBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red, width: 2.0),
-                      ),
-                      focusedErrorBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red, width: 2.0),
-                      ),
-                    ),
+                    controller: _passwordController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your password';
@@ -116,7 +81,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           final String email = _emailController.text.trim();
                           final String password =
                               _passwordController.text.trim();
-
                           if (email.isNotEmpty && password.isNotEmpty) {
                             try {
                               await Provider.of<AuthService>(context,
@@ -145,20 +109,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           }
                         }
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryBlue,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
                       child: Text(
                         'Login',
-                        style: theme.textTheme.headlineSmall?.copyWith(
-                          color: AppColors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: theme.textTheme.labelMedium,
                       ),
                     ),
                   ),
@@ -171,19 +124,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const SignupScreen()),
+                            builder: (context) => const SignupScreen(),
+                          ),
                         ),
-                        style: TextButton.styleFrom(
-                          minimumSize: Size.zero,
-                          padding: EdgeInsets.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        child: Text('Signup',
-                            style: theme.textTheme.headlineSmall?.copyWith(
-                              color: AppColors.primaryBlue,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            )),
+                        child:
+                            Text('Signup', style: theme.textTheme.labelSmall),
                       ),
                     ],
                   ),
@@ -192,21 +137,9 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-          if (isLoading)
-            Container(
-              color: Colors.black54,
-              child: const Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
+          if (isLoading) const LoadingWidget(),
         ],
       ),
     );
-  }
-
-  bool _isValidEmail(String email) {
-    // Regular expression for a basic email validation
-    final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-    return emailRegex.hasMatch(email);
   }
 }
