@@ -3,13 +3,34 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static final ThemeData appTheme = ThemeData(
-    scaffoldBackgroundColor: AppColors.darkGrey,
-    primaryColor: AppColors.primaryBlue,
-    textTheme: textTheme,
-  );
+      scaffoldBackgroundColor: AppColors.lightGrey,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: AppColors.lightGrey,
+      ),
+      primaryColor: AppColors.primaryBlue,
+      textTheme: textTheme,
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          minimumSize: Size.zero,
+          padding: EdgeInsets.zero,
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primaryBlue,
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ));
 
   static const TextTheme textTheme = TextTheme(
-      displayLarge: _headline1, //24px
+      displayLarge: _appTitle, //22px
+      labelMedium: _buttonText, //18px
+      labelSmall: _textButtonText, //14px
+
       displayMedium: _headline2, //18px
       displaySmall: _headline3, //14px
       headlineMedium: _headline4, //16px
@@ -26,11 +47,25 @@ class AppTheme {
       // overline: _overline, //10px
       );
 
-  static const TextStyle _headline1 = TextStyle(
+  static const TextStyle _appTitle = TextStyle(
     fontFamily: "Poppins",
-    fontWeight: FontWeight.w600,
-    color: AppColors.secondaryDimBlue,
-    fontSize: 24,
+    fontWeight: FontWeight.bold,
+    color: AppColors.primaryBlue,
+    fontSize: 22,
+  );
+
+  static const TextStyle _buttonText = TextStyle(
+    fontFamily: "Poppins",
+    fontWeight: FontWeight.bold,
+    fontSize: 18,
+    color: AppColors.white,
+  );
+
+  static const TextStyle _textButtonText = TextStyle(
+    fontFamily: "Poppins",
+    fontWeight: FontWeight.bold,
+    color: AppColors.primaryBlue,
+    fontSize: 14,
   );
 
   static const TextStyle _headline2 = TextStyle(
