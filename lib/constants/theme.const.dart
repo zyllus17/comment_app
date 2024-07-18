@@ -27,31 +27,26 @@ class AppTheme {
       ));
 
   static const TextTheme textTheme = TextTheme(
-      displayLarge: _appTitle, //22px
-      labelMedium: _buttonText, //18px
-      labelSmall: _textButtonText, //14px
-
-      displayMedium: _headline2, //18px
-      displaySmall: _headline3, //14px
-      headlineMedium: _headline4, //16px
-      headlineSmall: _headline5, //14px
-      labelLarge: _headline5
-
-      // headline6: _headline6, //20px
-      // subtitle1: _subtitle1, //16px
-      // subtitle2: _subtitle2, //13px
-      // bodyText1: _bodyText1, //14px
-      // bodyText2: _bodyText2, //14px //normal
-      // button: _button, //14px
-      // caption: _caption, //12px
-      // overline: _overline, //10px
-      );
+    displayLarge: _appTitle, //22px
+    displayMedium: _circleText, //20px
+    labelMedium: _buttonText, //18px
+    labelSmall: _textButtonText, //14px
+    bodyLarge: _blackBoldText, //16px
+    bodyMedium: _greyItalicsText, //16px
+    bodySmall: _regularText, //16px
+  );
 
   static const TextStyle _appTitle = TextStyle(
     fontFamily: "Poppins",
     fontWeight: FontWeight.bold,
     color: AppColors.primaryBlue,
     fontSize: 22,
+  );
+
+  static const TextStyle _circleText = TextStyle(
+    fontFamily: "Poppins",
+    fontWeight: FontWeight.bold,
+    fontSize: 20,
   );
 
   static const TextStyle _buttonText = TextStyle(
@@ -68,63 +63,23 @@ class AppTheme {
     fontSize: 14,
   );
 
-  static const TextStyle _headline2 = TextStyle(
+  static const TextStyle _greyItalicsText = TextStyle(
     fontFamily: "Poppins",
-    fontWeight: FontWeight.w400,
-    fontSize: 18,
+    fontWeight: FontWeight.w500,
+    fontStyle: FontStyle.italic,
+    fontSize: 16,
+    color: AppColors.darkGrey,
   );
 
-  static const TextStyle _headline3 = TextStyle(
+  static const TextStyle _blackBoldText = TextStyle(
     fontFamily: "Poppins",
-    fontWeight: FontWeight.w400,
-    fontSize: 14,
-  );
-
-  static const TextStyle _headline4 = TextStyle(
-    fontFamily: "Poppins",
-    color: AppColors.secondaryDimBlue,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w600,
+    fontStyle: FontStyle.normal,
     fontSize: 16,
   );
 
-  static const TextStyle _headline5 = TextStyle(
+  static const TextStyle _regularText = TextStyle(
     fontFamily: "Poppins",
-    fontWeight: FontWeight.w300,
-    fontSize: 14,
+    fontSize: 16,
   );
-
-  // static final TextStyle _headline6 = TextStyle(
-  //   fontFamily: "Roboto",
-  //   color: AppColors.textColor,
-  //   fontWeight: FontWeight.w700,
-  //   fontSize: 20.sp,
-  // );
-
-  // static final TextStyle _subtitle1 = TextStyle(
-  //   fontFamily: "RedHatDisplay",
-  //   color: AppColors.textColor,
-  //   fontWeight: FontWeight.w500,
-  //   fontSize: 16.sp,
-  // );
-
-  // static final TextStyle _subtitle2 = TextStyle(
-  //   fontFamily: "RedHatDisplay",
-  //   color: AppColors.textColor,
-  //   fontWeight: FontWeight.w500,
-  //   fontSize: 13.sp,
-  // );
-
-  // static final TextStyle _bodyText1 = TextStyle(
-  //   fontFamily: "RedHatDisplay",
-  //   color: AppColors.textColor,
-  //   fontWeight: FontWeight.w700,
-  //   fontSize: 14.sp,
-  // );
-
-  // static final TextStyle _bodyText2 = TextStyle(
-  //   fontFamily: "RedHatDisplay",
-  //   color: AppColors.textColor,
-  //   fontWeight: FontWeight.w400,
-  //   fontSize: 14.sp,
-  // );
 }
