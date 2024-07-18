@@ -1,9 +1,11 @@
+import 'package:comment_app/helpers/mask_email.helper.dart';
 import 'package:comment_app/models/comment.model.dart';
 import 'package:comment_app/services/auth.service.dart';
 import 'package:comment_app/services/comment.service.dart';
 import 'package:comment_app/services/loading.dart';
 import 'package:comment_app/services/remote_config.service.dart';
 import 'package:comment_app/widgets/comment_box.widget.dart';
+import 'package:comment_app/widgets/loading.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:comment_app/constants/colors.const.dart';
 
@@ -25,32 +27,18 @@ class _HomeScreenState extends State<HomeScreen> {
     _remoteConfigService = initRemoteConfig();
   }
 
-  String maskEmail(String email, bool mask) {
-    if (!mask) return email;
-    final parts = email.split('@');
-    if (parts.length != 2) return email;
-    final local = parts[0];
-    if (local.length <= 3) return email;
-    return '${local.substring(0, 3)}****@${parts[1]}';
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: AppColors.lightGrey,
       appBar: AppBar(
         centerTitle: false,
-        automaticallyImplyLeading: false,
         backgroundColor: AppColors.primaryBlue,
         title: Text(
           'Comments',
-          style: theme.textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: AppColors.white,
-            fontSize: 20,
-          ),
+          style: theme.textTheme.displayLarge?.copyWith(color: AppColors.white),
         ),
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             onPressed: () async {
@@ -77,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
               future: _remoteConfigService,
               builder: (context, configSnapshot) {
                 if (configSnapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const LoadingWidget();
                 } else if (configSnapshot.hasError) {
                   return const Center(
                     child: Text('Error fetching remote config'),
