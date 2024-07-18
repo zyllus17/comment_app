@@ -30,7 +30,7 @@ class AppTheme {
     displayLarge: _appTitle, //22px
     displayMedium: _circleText, //20px
     labelMedium: _buttonText, //18px
-    labelSmall: _textButtonText, //14px
+    labelSmall: _textButtonText, //16px
     bodyLarge: _blackBoldText, //16px
     bodyMedium: _greyItalicsText, //16px
     bodySmall: _regularText, //16px
@@ -60,7 +60,7 @@ class AppTheme {
     fontFamily: "Poppins",
     fontWeight: FontWeight.bold,
     color: AppColors.primaryBlue,
-    fontSize: 14,
+    fontSize: 16,
   );
 
   static const TextStyle _greyItalicsText = TextStyle(

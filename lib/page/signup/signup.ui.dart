@@ -133,7 +133,10 @@ class _SignupScreenState extends State<SignupScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('Already have an account? '),
+                      Text(
+                        'Already have an account? ',
+                        style: theme.textTheme.bodySmall,
+                      ),
                       TextButton(
                         onPressed: () => Navigator.push(
                           context,

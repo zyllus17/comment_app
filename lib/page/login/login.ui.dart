@@ -133,7 +133,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('New here? '),
+                      Text(
+                        'New here? ',
+                        style: theme.textTheme.bodySmall,
+                      ),
                       TextButton(
                         onPressed: () => Navigator.push(
                           context,

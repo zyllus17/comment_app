@@ -22,6 +22,9 @@ class CustomTextFormField extends StatelessWidget {
       obscureText: obscureText ?? false,
       decoration: InputDecoration(
         labelText: label,
+        labelStyle: const TextStyle(
+          fontWeight: FontWeight.normal,
+        ),
         fillColor: AppColors.white,
         filled: true,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16),
