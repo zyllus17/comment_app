@@ -1,6 +1,7 @@
 import 'package:comment_app/helpers/email_regex.helper.dart';
 import 'package:comment_app/widgets/custom_textformfield.widget.dart';
 import 'package:comment_app/widgets/loading.widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:comment_app/page/home/home.ui.dart';
@@ -92,8 +93,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                     builder: (context) => const HomeScreen()),
                               );
                               debugPrint('Logged in');
+                            } on FirebaseAuthException catch (e) {
+                              String message =
+                                  'An error occurred. Please try again.';
+                              if (e.code == 'invalid-email' ||
+                                  e.code == 'user-not-found' ||
+                                  e.code == 'wrong-password') {
+                                message =
+                                    'Wrong Email or Password provided. Please check and try again.';
+                              }
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(message)),
+                              );
                             } catch (e) {
-                              // Print error to debug console
                               debugPrint('Login error: $e');
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
@@ -103,8 +115,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                  content:
-                                      Text('Please enter email and password')),
+                                content:
+                                    Text('Please enter email and password'),
+                              ),
                             );
                           }
                         }
