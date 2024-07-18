@@ -1,13 +1,11 @@
+import 'package:comment_app/constants/routes.const.dart';
+import 'package:comment_app/constants/theme.const.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:comment_app/firebase_options.dart';
-import 'package:comment_app/page/error/error.ui.dart';
-import 'package:comment_app/page/home/home.ui.dart';
-import 'package:comment_app/page/login/login.ui.dart';
-import 'package:comment_app/page/signup/signup.ui.dart';
 import 'package:comment_app/services/auth.service.dart';
 import 'package:comment_app/services/loading.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,25 +31,9 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Comments App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: AppTheme.appTheme,
         initialRoute: '/',
-        routes: {
-          '/': (context) => Consumer<AuthService>(
-                builder: (context, authService, _) {
-                  return authService.user == null
-                      ? LoginScreen()
-                      : const HomeScreen();
-                },
-              ),
-          '/signup': (context) => SignupScreen(),
-          '/login': (context) => LoginScreen(),
-          '/home': (context) => const HomeScreen(),
-        },
-        onGenerateRoute: (settings) {
-          return MaterialPageRoute(builder: (context) => const ErrorScreen());
-        },
+        onGenerateRoute: Routes.generateRoute,
       ),
     );
   }
