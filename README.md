@@ -6,7 +6,11 @@ App made using Flutter for PingoLearn.
 
 ## App Showcase
 
-![video](screenshot/comment_app_showcase.mov)
+
+https://github.com/user-attachments/assets/ef9f208c-ba4d-4846-8b97-ffb994d8a42f
+
+
+[For better quality video click here](screenshot/comment_app_showcase.mov)
 
 ## Screenshots
 
